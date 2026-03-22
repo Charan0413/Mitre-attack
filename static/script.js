@@ -24,6 +24,37 @@ class AttackSimulator {
         this.clearLogBtn = document.getElementById('clearLogBtn');
         
         this.initializeEventListeners();
+        this.initializeTabNavigation();
+    }
+    
+    initializeTabNavigation() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                this.switchTab(targetTab);
+            });
+        });
+    }
+    
+    switchTab(tabName) {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Remove active class from all tabs and contents
+        tabButtons.forEach(button => button.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to selected tab and content
+        const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
+        const selectedContent = document.getElementById(tabName);
+        
+        if (selectedButton && selectedContent) {
+            selectedButton.classList.add('active');
+            selectedContent.classList.add('active');
+        }
     }
     
     initializeEventListeners() {
@@ -242,7 +273,7 @@ class AttackSimulator {
 
 // Initialize the simulator when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const simulator = new AttackSimulator();
+    window.simulator = new AttackSimulator();
     
     // Add some helpful console messages
     console.log('MITRE ATT&CK Compromise Accounts Simulation loaded');
@@ -251,6 +282,15 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('- T1003: Credential Access');
     console.log('- T1078: Valid Accounts');
 });
+
+// Global function for tab switching (used in HTML onclick)
+function switchToTab(tabName) {
+    // Ensure simulator exists or create a new one
+    if (!window.simulator) {
+        window.simulator = new AttackSimulator();
+    }
+    window.simulator.switchTab(tabName);
+}
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
