@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MITRE ATT&CK - Compromise Accounts Simulation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🔐 Compromise Account Simulation</h1>
             <p class="subtitle">MITRE ATT&CK Framework Demonstration</p>
+            <div class="version-badge">v2.0 Professional Edition</div>
         </header>
 
         <main>
@@ -25,31 +29,37 @@
 
             <section class="simulation-area">
                 <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-title">Attack Progress</span>
+                        <span class="progress-percentage" id="progressText">0%</span>
+                    </div>
                     <div class="progress-bar">
                         <div id="progressFill" class="progress-fill"></div>
                     </div>
-                    <span id="progressText" class="progress-text">0%</span>
                 </div>
 
                 <div class="step-display">
-                    <h2>Current Step</h2>
+                    <h2>
+                        <span>⚡</span>
+                        Current Attack Step
+                    </h2>
                     <div id="currentStep" class="step-content">
-                        Click "Start Attack Simulation" to begin
+                        Click "Start Attack Simulation" to begin the cybersecurity demonstration
                     </div>
                     
                     <!-- Interactive Credential Input Form -->
                     <div id="credentialForm" class="credential-form" style="display: none;">
                         <div class="form-container">
                             <h3>🔐 Fake Login Page</h3>
-                            <p class="form-instruction" id="formInstruction">Please enter your credentials</p>
+                            <p class="form-instruction" id="formInstruction">Please enter your credentials to continue</p>
                             <form id="loginForm" class="login-form">
                                 <div class="form-group">
-                                    <label for="username">Username:</label>
+                                    <label for="username">Username</label>
                                     <input type="text" id="username" name="username" required 
                                            placeholder="Enter your username" autocomplete="username">
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Password:</label>
+                                    <label for="password">Password</label>
                                     <input type="password" id="password" name="password" required 
                                            placeholder="Enter your password" autocomplete="current-password">
                                 </div>
@@ -65,41 +75,61 @@
                 </div>
 
                 <div class="status-display" id="statusDisplay" style="display: none;">
-                    <h2>🚨 Status</h2>
+                    <h2>
+                        <span>🚨</span>
+                        Attack Status
+                    </h2>
                     <div id="statusMessage" class="status-message"></div>
                 </div>
             </section>
 
             <section class="log-panel">
-                <h2>📋 Attack Log</h2>
+                <h2>
+                    <span>📋</span>
+                    Attack Simulation Log
+                </h2>
                 <div id="attackLog" class="log-content">
-                    <div class="log-entry">System ready. Waiting for simulation to start...</div>
+                    <div class="log-entry">
+                        <span class="log-time">[System]</span> 
+                        <span class="log-step">MITRE ATT&CK Simulation initialized. Ready to start...</span>
+                    </div>
                 </div>
             </section>
 
             <section class="defense-tips">
-                <h2>🛡️ Defense Tips</h2>
+                <h2>🛡️ Cybersecurity Defense Strategies</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <h3>🔑 Strong Passwords</h3>
-                        <p>Use complex passwords with uppercase, lowercase, numbers, and special characters.</p>
+                        <h3>🔑 Strong Password Management</h3>
+                        <p>Implement complex passwords with uppercase, lowercase, numbers, and special characters. Use password managers for secure storage and unique passwords for each account.</p>
                     </div>
                     <div class="tip-card">
-                        <h3>📱 Enable 2FA</h3>
-                        <p>Two-factor authentication adds an extra layer of security to your accounts.</p>
+                        <h3>📱 Multi-Factor Authentication</h3>
+                        <p>Enable 2FA/MFA across all accounts. This adds an essential security layer that prevents unauthorized access even if credentials are compromised.</p>
                     </div>
                     <div class="tip-card">
-                        <h3>🎣 Avoid Phishing</h3>
-                        <p>Always verify email senders and avoid clicking suspicious links.</p>
+                        <h3>🎣 Phishing Awareness Training</h3>
+                        <p>Regular training on identifying phishing attempts. Always verify email senders, check URLs, and avoid clicking suspicious links or downloading attachments.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🔍 Security Monitoring</h3>
+                        <p>Implement continuous monitoring and alerting systems. Regular security audits and penetration testing help identify vulnerabilities before attackers do.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🚪 Access Control Policies</h3>
+                        <p>Follow principle of least privilege. Regularly review access rights and implement role-based access control to minimize potential damage.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>📚 Incident Response Planning</h3>
+                        <p>Develop and practice incident response procedures. Quick detection and response can significantly reduce the impact of security breaches.</p>
                     </div>
                 </div>
             </section>
 
             <footer>
-                <p class="mitre-note">
-                    ⚠️ This simulation is based on MITRE ATT&CK framework for educational purposes only.
-                    No real hacking or unauthorized access is performed.
-                </p>
+                <div class="mitre-note">
+                    <strong>⚠️ Educational Simulation Notice:</strong> This application demonstrates attack patterns based on the MITRE ATT&CK framework for cybersecurity education purposes only. No real authentication, hacking, or unauthorized access occurs. Use responsibly and ethically.
+                </div>
             </footer>
         </main>
     </div>
