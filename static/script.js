@@ -21,6 +21,7 @@ class AttackSimulator {
         this.formInstruction = document.getElementById('formInstruction');
         this.usernameInput = document.getElementById('username');
         this.passwordInput = document.getElementById('password');
+        this.clearLogBtn = document.getElementById('clearLogBtn');
         
         this.initializeEventListeners();
     }
@@ -29,6 +30,7 @@ class AttackSimulator {
         this.startBtn.addEventListener('click', () => this.startSimulation());
         this.resetBtn.addEventListener('click', () => this.resetSimulation());
         this.loginForm.addEventListener('submit', (e) => this.handleCredentialSubmit(e));
+        this.clearLogBtn.addEventListener('click', () => this.clearLog());
     }
     
     async startSimulation() {
@@ -166,6 +168,11 @@ class AttackSimulator {
         const percentage = Math.round((current / total) * 100);
         this.progressFill.style.width = `${percentage}%`;
         this.progressText.textContent = `${percentage}%`;
+    }
+    
+    clearLog() {
+        this.attackLog.innerHTML = '';
+        this.addLogEntry('Log cleared by user');
     }
     
     addLogEntry(message) {
