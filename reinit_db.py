@@ -54,14 +54,6 @@ def reinit_database():
             "Please enter your username and password to continue"
         ),
         (
-            "Credentials captured by attacker", 
-            "T1003", 
-            False, 
-            None, 
-            None, 
-            "Attacker receives the stolen credentials"
-        ),
-        (
             "Attacker logs in using stolen account", 
             "T1078", 
             False, 
@@ -89,7 +81,7 @@ def reinit_database():
     conn.close()
     
     print("Database reinitialized successfully!")
-    print("Created 'attacks' table with 5 interactive records")
+    print("Created 'attacks' table with 4 interactive records")
     print("\nMITRE ATT&CK Techniques:")
     print("- T1566: Phishing")
     print("- T1003: Credential Access") 

@@ -33,35 +33,20 @@ def get_attacks():
         cursor = conn.cursor()
         
         # Fetch all attack data from database
-        cursor.execute('SELECT step, mitre, requires_input, input_type, expected_input, instruction, defense_options, success_path, failure_path FROM attacks ORDER BY id')
+        cursor.execute('SELECT step, mitre, requires_input, input_type, expected_input, instruction FROM attacks ORDER BY id')
         attacks = cursor.fetchall()
         
         # Convert to list of dictionaries
         attack_list = []
         for attack in attacks:
-            attack_data = {
+            attack_list.append({
                 'step': attack['step'],
                 'mitre': attack['mitre'],
                 'requires_input': bool(attack['requires_input']),
                 'input_type': attack['input_type'],
                 'expected_input': attack['expected_input'],
                 'instruction': attack['instruction']
-            }
-            
-            # Add defense options if present
-            if attack['defense_options']:
-                try:
-                    attack_data['defense_options'] = eval(attack['defense_options'])
-                except:
-                    attack_data['defense_options'] = []
-            else:
-                attack_data['defense_options'] = []
-            
-            # Add path information
-            attack_data['success_path'] = attack['success_path']
-            attack_data['failure_path'] = attack['failure_path']
-            
-            attack_list.append(attack_data)
+            })
         
         conn.close()
         
