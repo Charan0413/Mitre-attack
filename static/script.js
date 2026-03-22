@@ -285,8 +285,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Global function for tab switching (used in HTML onclick)
 function switchToTab(tabName) {
-    const simulator = window.simulator || new AttackSimulator();
-    simulator.switchTab(tabName);
+    console.log('Switching to tab:', tabName);
+    
+    // Get tab elements
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    console.log('Found tab buttons:', tabButtons.length);
+    console.log('Found tab contents:', tabContents.length);
+    
+    // Remove active class from all tabs and contents
+    tabButtons.forEach(button => button.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    // Add active class to selected tab and content
+    const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
+    const selectedContent = document.getElementById(tabName);
+    
+    console.log('Selected button:', selectedButton);
+    console.log('Selected content:', selectedContent);
+    
+    if (selectedButton && selectedContent) {
+        selectedButton.classList.add('active');
+        selectedContent.classList.add('active');
+        console.log('Tab switched successfully to:', tabName);
+    } else {
+        console.error('Could not find tab elements for:', tabName);
+    }
 }
 
 // Add keyboard shortcuts
