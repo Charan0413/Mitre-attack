@@ -14,7 +14,7 @@
         <header>
             <h1>🔐 Compromise Account Simulation</h1>
             <p class="subtitle">MITRE ATT&CK Framework Demonstration</p>
-            <div class="version-badge">v2.0 Professional Edition</div>
+           
         </header>
 
         <main>
@@ -84,10 +84,15 @@
             </section>
 
             <section class="log-panel">
-                <h2>
-                    <span>📋</span>
-                    Attack Simulation Log
-                </h2>
+                <div class="log-header">
+                    <h2>
+                        <span>📋</span>
+                        Attack Simulation Log
+                    </h2>
+                    <button id="clearLogBtn" class="clear-log-button">
+                        🗑️ Clear Log
+                    </button>
+                </div>
                 <div id="attackLog" class="log-content">
                     <div class="log-entry">
                         <span class="log-time">[System]</span> 

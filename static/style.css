@@ -89,17 +89,6 @@ header h1 {
     margin-bottom: 0.5rem;
 }
 
-.version-badge {
-    display: inline-block;
-    background: var(--bg-tertiary);
-    color: var(--accent-primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: 1px solid var(--border-color);
-    margin-top: 0.5rem;
-}
 
 /* Main Content */
 main {
@@ -447,14 +436,48 @@ main::before {
     margin-bottom: 3rem;
 }
 
-.log-panel h2 {
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
+}
+
+.log-panel h2 {
     color: var(--text-primary);
     font-size: 1.5rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    margin: 0;
+}
+
+.clear-log-button {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clear-log-button:hover {
+    background: var(--accent-danger);
+    color: white;
+    border-color: var(--accent-danger);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.clear-log-button:active {
+    transform: translateY(0);
 }
 
 .log-content {
