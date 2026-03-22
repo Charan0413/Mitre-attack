@@ -1,380 +1,278 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MITRE ATT&CK - Compromise Accounts Simulation</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
+
     <div class="container">
+
         <header>
-            <h1>🔐 MITRE ATT&CK Simulation Platform</h1>
-            <p class="subtitle">Professional Cybersecurity Training Framework</p>
+
+            <h1>🔐 Compromise Account Simulation</h1>
+
+            <p class="subtitle">MITRE ATT&CK Framework Demonstration</p>
+
+           
+
         </header>
 
-        <!-- Tab Navigation -->
-        <nav class="tab-navigation">
-            <button class="tab-button active" data-tab="home">
-                <span class="tab-icon">🏠</span>
-                <span class="tab-label">Home</span>
-            </button>
-            <button class="tab-button" data-tab="simulation">
-                <span class="tab-icon">⚡</span>
-                <span class="tab-label">Simulation</span>
-            </button>
-            <button class="tab-button" data-tab="defense">
-                <span class="tab-icon">🛡️</span>
-                <span class="tab-label">Defense Strategies</span>
-            </button>
-        </nav>
+
 
         <main>
-            <!-- Home Tab -->
-            <section id="home" class="tab-content active">
-                <div class="hero-section">
-                    <div class="hero-content">
-                        <h2>Welcome to the MITRE ATT&CK Training Platform</h2>
-                        <p class="hero-description">
-                            Experience real-world cyber attack simulations based on the MITRE ATT&CK framework. 
-                            Learn how attackers compromise accounts and discover effective defense strategies.
-                        </p>
-                        <div class="feature-grid">
-                            <div class="feature-card">
-                                <div class="feature-icon">🎯</div>
-                                <h3>Interactive Simulations</h3>
-                                <p>Hands-on experience with realistic attack scenarios</p>
-                            </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">📚</div>
-                                <h3>MITRE ATT&CK Framework</h3>
-                                <p>Based on industry-standard cybersecurity techniques</p>
-                            </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">🛡️</div>
-                                <h3>Defense Strategies</h3>
-                                <p>Comprehensive protection and mitigation techniques</p>
-                            </div>
-                        </div>
-                        <button class="cta-button" onclick="switchToTab('simulation')">
-                            🚀 Start Simulation
-                        </button>
-                    </div>
-                </div>
 
-                <div class="info-section">
-                    <div class="info-grid">
-                        <div class="info-card">
-                            <h3>🔍 What is MITRE ATT&CK?</h3>
-                            <p>The MITRE ATT&CK framework is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. It's used as a foundation for the development of specific threat models and methodologies in the private sector, in government, and in the cybersecurity product and service community.</p>
-                        </div>
-                        <div class="info-card">
-                            <h3>🎓 Educational Purpose</h3>
-                            <p>This simulation platform is designed for cybersecurity education and awareness training. It demonstrates how attackers use techniques like phishing, credential access, and valid accounts to compromise systems, helping organizations understand and prevent real attacks.</p>
-                        </div>
-                        <div class="info-card">
-                            <h3>⚠️ Important Notice</h3>
-                            <p>This is an educational simulation only. No real hacking or unauthorized access occurs. All techniques demonstrated are for training purposes to help improve cybersecurity awareness and defense capabilities.</p>
-                        </div>
-                    </div>
-                </div>
+            <section class="control-panel">
+
+                <button id="startBtn" class="start-button">
+
+                    🚀 Start Attack Simulation
+
+                </button>
+
+                <button id="resetBtn" class="reset-button" style="display: none;">
+
+                    🔄 Reset Simulation
+
+                </button>
+
             </section>
 
-            <!-- Simulation Tab -->
-            <section id="simulation" class="tab-content">
-                <div class="control-panel">
-                    <button id="startBtn" class="start-button">
-                        🚀 Start Attack Simulation
-                    </button>
-                    <button id="resetBtn" class="reset-button" style="display: none;">
-                        🔄 Reset Simulation
-                    </button>
-                </div>
 
-                <div class="simulation-area">
-                    <div class="progress-container">
-                        <div class="progress-header">
-                            <span class="progress-title">Attack Progress</span>
-                            <span class="progress-percentage" id="progressText">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div id="progressFill" class="progress-fill"></div>
-                        </div>
+
+            <section class="simulation-area">
+
+                <div class="progress-container">
+
+                    <div class="progress-header">
+
+                        <span class="progress-title">Attack Progress</span>
+
+                        <span class="progress-percentage" id="progressText">0%</span>
+
                     </div>
 
-                    <div class="step-display">
-                        <h2>
-                            <span>⚡</span>
-                            Current Attack Step
-                        </h2>
-                        <div id="currentStep" class="step-content">
-                            Click "Start Attack Simulation" to begin the cybersecurity demonstration
-                        </div>
-                        
-                        <!-- Interactive Credential Input Form -->
-                        <div id="credentialForm" class="credential-form" style="display: none;">
-                            <div class="form-container">
-                                <h3>🔐 Fake Login Page</h3>
-                                <p class="form-instruction" id="formInstruction">Please enter your credentials to continue</p>
-                                <form id="loginForm" class="login-form">
-                                    <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" id="username" name="username" required 
-                                               placeholder="Enter your username" autocomplete="username">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" name="password" required 
-                                               placeholder="Enter your password" autocomplete="current-password">
-                                    </div>
-                                    <button type="submit" class="submit-button">
-                                        🔓 Sign In
-                                    </button>
-                                </form>
-                                <div class="warning-message">
-                                    ⚠️ This is a fake login page for educational purposes only!
+                    <div class="progress-bar">
+
+                        <div id="progressFill" class="progress-fill"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="step-display">
+
+                    <h2>
+
+                        <span>⚡</span>
+
+                        Current Attack Step
+
+                    </h2>
+
+                    <div id="currentStep" class="step-content">
+
+                        Click "Start Attack Simulation" to begin the cybersecurity demonstration
+
+                    </div>
+
+                    
+
+                    <!-- Interactive Credential Input Form -->
+
+                    <div id="credentialForm" class="credential-form" style="display: none;">
+
+                        <div class="form-container">
+
+                            <h3>🔐 Fake Login Page</h3>
+
+                            <p class="form-instruction" id="formInstruction">Please enter your credentials to continue</p>
+
+                            <form id="loginForm" class="login-form">
+
+                                <div class="form-group">
+
+                                    <label for="username">Username</label>
+
+                                    <input type="text" id="username" name="username" required 
+
+                                           placeholder="Enter your username" autocomplete="username">
+
                                 </div>
+
+                                <div class="form-group">
+
+                                    <label for="password">Password</label>
+
+                                    <input type="password" id="password" name="password" required 
+
+                                           placeholder="Enter your password" autocomplete="current-password">
+
+                                </div>
+
+                                <button type="submit" class="submit-button">
+
+                                    🔓 Sign In
+
+                                </button>
+
+                            </form>
+
+                            <div class="warning-message">
+
+                                ⚠️ This is a fake login page for educational purposes only!
+
                             </div>
+
                         </div>
+
                     </div>
 
-                    <div class="status-display" id="statusDisplay" style="display: none;">
-                        <h2>
-                            <span>🚨</span>
-                            Attack Status
-                        </h2>
-                        <div id="statusMessage" class="status-message"></div>
-                    </div>
                 </div>
 
-                <div class="log-panel">
-                    <div class="log-header">
-                        <h2>
-                            <span>📋</span>
-                            Attack Simulation Log
-                        </h2>
-                        <button id="clearLogBtn" class="clear-log-button">
-                            🗑️ Clear Log
-                        </button>
-                    </div>
-                    <div id="attackLog" class="log-content">
-                        <div class="log-entry">
-                            <span class="log-time">[System]</span> 
-                            <span class="log-step">MITRE ATT&CK Simulation initialized. Ready to start...</span>
-                        </div>
-                    </div>
+
+
+                <div class="status-display" id="statusDisplay" style="display: none;">
+
+                    <h2>
+
+                        <span>🚨</span>
+
+                        Attack Status
+
+                    </h2>
+
+                    <div id="statusMessage" class="status-message"></div>
+
                 </div>
+
             </section>
 
-            <!-- Defense Strategies Tab -->
-            <section id="defense" class="tab-content">
-                <div class="defense-header">
-                    <h2>🛡️ Comprehensive Cybersecurity Defense Strategies</h2>
-                    <p class="defense-intro">
-                        Protect your organization with these proven cybersecurity strategies and best practices. 
-                        Each defense mechanism addresses specific attack vectors from the MITRE ATT&CK framework.
-                    </p>
+
+
+            <section class="log-panel">
+
+                <h2>
+
+                    <span>📋</span>
+
+                    Attack Simulation Log
+
+                </h2>
+
+                <div id="attackLog" class="log-content">
+
+                    <div class="log-entry">
+
+                        <span class="log-time">[System]</span> 
+
+                        <span class="log-step">MITRE ATT&CK Simulation initialized. Ready to start...</span>
+
+                    </div>
+
                 </div>
 
-                <div class="defense-categories">
-                    <div class="category-section">
-                        <h3>🔐 Authentication & Access Control</h3>
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <h4>🔑 Strong Password Management</h4>
-                                <p>Implement complex passwords with uppercase, lowercase, numbers, and special characters. Use password managers for secure storage and unique passwords for each account.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Enforce minimum 12-character passwords</li>
-                                        <li>Require complexity requirements</li>
-                                        <li>Implement regular password rotation</li>
-                                        <li>Deploy enterprise password managers</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>📱 Multi-Factor Authentication (MFA)</h4>
-                                <p>Enable 2FA/MFA across all accounts. This adds an essential security layer that prevents unauthorized access even if credentials are compromised.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Deploy MFA for all critical systems</li>
-                                        <li>Use authenticator apps over SMS</li>
-                                        <li>Implement conditional access policies</li>
-                                        <li>Provide backup authentication methods</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🚪 Access Control Policies</h4>
-                                <p>Follow principle of least privilege. Regularly review access rights and implement role-based access control to minimize potential damage.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Define role-based access controls</li>
-                                        <li>Implement just-in-time access</li>
-                                        <li>Regular access reviews and audits</li>
-                                        <li>Separate duties and responsibilities</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category-section">
-                        <h3>🎣 Phishing & Social Engineering Defense</h3>
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <h4>📚 Security Awareness Training</h4>
-                                <p>Regular training on identifying phishing attempts. Always verify email senders, check URLs, and avoid clicking suspicious links or downloading attachments.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Monthly security awareness sessions</li>
-                                        <li>Phishing simulation campaigns</li>
-                                        <li>Real-world threat intelligence sharing</li>
-                                        <li>Incident reporting procedures</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>📧 Email Security Solutions</h4>
-                                <p>Implement advanced email filtering, anti-phishing solutions, and DMARC/DKIM/SPF records to prevent malicious emails from reaching users.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Deploy advanced email security gateways</li>
-                                        <li>Configure DMARC/DKIM/SPF records</li>
-                                        <li>Implement URL rewriting and sandboxing</li>
-                                        <li>Set up real-time threat intelligence feeds</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🔍 Web Security & Browsing Protection</h4>
-                                <p>Deploy web filters, safe browsing tools, and browser security extensions to protect against malicious websites and drive-by attacks.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Implement DNS filtering solutions</li>
-                                        <li>Deploy browser security extensions</li>
-                                        <li>Configure web application firewalls</li>
-                                        <li>Establish safe browsing policies</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category-section">
-                        <h3>🔍 Detection & Monitoring</h3>
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <h4>📊 Security Information & Event Management (SIEM)</h4>
-                                <p>Implement comprehensive logging and monitoring solutions to detect suspicious activities and potential security incidents in real-time.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Deploy centralized logging infrastructure</li>
-                                        <li>Configure security event correlation</li>
-                                        <li>Set up automated alerting rules</li>
-                                        <li>Establish 24/7 monitoring capabilities</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🚨 Intrusion Detection & Prevention</h4>
-                                <p>Deploy IDS/IPS solutions to monitor network traffic and block malicious activities before they cause damage.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Install network-based IDS/IPS</li>
-                                        <li>Configure host-based intrusion detection</li>
-                                        <li>Set up custom detection rules</li>
-                                        <li>Integrate with threat intelligence feeds</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🔬 Endpoint Detection & Response (EDR)</h4>
-                                <p>Implement advanced endpoint protection solutions that detect and respond to threats on individual devices.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Deploy EDR solutions across endpoints</li>
-                                        <li>Configure behavioral analytics</li>
-                                        <li>Set up automated response capabilities</li>
-                                        <li>Implement threat hunting procedures</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category-section">
-                        <h3>🚀 Incident Response & Recovery</h3>
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <h4>📋 Incident Response Planning</h4>
-                                <p>Develop and practice incident response procedures. Quick detection and response can significantly reduce the impact of security breaches.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Create incident response playbooks</li>
-                                        <li>Establish response team structure</li>
-                                        <li>Conduct regular tabletop exercises</li>
-                                        <li>Define communication protocols</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>💾 Backup & Disaster Recovery</h4>
-                                <p>Implement comprehensive backup strategies and disaster recovery plans to ensure business continuity during security incidents.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Deploy 3-2-1 backup strategy</li>
-                                        <li>Test backup restoration procedures</li>
-                                        <li>Implement off-site backup storage</li>
-                                        <li>Establish recovery time objectives</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🔄 Business Continuity Planning</h4>
-                                <p>Develop comprehensive business continuity plans to maintain critical operations during and after security incidents.</p>
-                                <div class="implementation-steps">
-                                    <h5>Implementation Steps:</h5>
-                                    <ul>
-                                        <li>Conduct business impact analysis</li>
-                                        <li>Identify critical business functions</li>
-                                        <li>Develop continuity strategies</li>
-                                        <li>Test and update plans regularly</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </section>
+
+
+
+            <section class="defense-tips">
+
+                <h2>🛡️ Cybersecurity Defense Strategies</h2>
+
+                <div class="tips-grid">
+
+                    <div class="tip-card">
+
+                        <h3>🔑 Strong Password Management</h3>
+
+                        <p>Implement complex passwords with uppercase, lowercase, numbers, and special characters. Use password managers for secure storage and unique passwords for each account.</p>
+
+                    </div>
+
+                    <div class="tip-card">
+
+                        <h3>📱 Multi-Factor Authentication</h3>
+
+                        <p>Enable 2FA/MFA across all accounts. This adds an essential security layer that prevents unauthorized access even if credentials are compromised.</p>
+
+                    </div>
+
+                    <div class="tip-card">
+
+                        <h3>🎣 Phishing Awareness Training</h3>
+
+                        <p>Regular training on identifying phishing attempts. Always verify email senders, check URLs, and avoid clicking suspicious links or downloading attachments.</p>
+
+                    </div>
+
+                    <div class="tip-card">
+
+                        <h3>🔍 Security Monitoring</h3>
+
+                        <p>Implement continuous monitoring and alerting systems. Regular security audits and penetration testing help identify vulnerabilities before attackers do.</p>
+
+                    </div>
+
+                    <div class="tip-card">
+
+                        <h3>🚪 Access Control Policies</h3>
+
+                        <p>Follow principle of least privilege. Regularly review access rights and implement role-based access control to minimize potential damage.</p>
+
+                    </div>
+
+                    <div class="tip-card">
+
+                        <h3>📚 Incident Response Planning</h3>
+
+                        <p>Develop and practice incident response procedures. Quick detection and response can significantly reduce the impact of security breaches.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <footer>
+
+                <div class="mitre-note">
+
+                    <strong>⚠️ Educational Simulation Notice:</strong> This application demonstrates attack patterns based on the MITRE ATT&CK framework for cybersecurity education purposes only. No real authentication, hacking, or unauthorized access occurs. Use responsibly and ethically.
+
+                </div>
+
+            </footer>
+
         </main>
 
-        <footer>
-            <div class="mitre-note">
-                <strong>⚠️ Educational Simulation Notice:</strong> This application demonstrates attack patterns based on the MITRE ATT&CK framework for cybersecurity education purposes only. No real authentication, hacking, or unauthorized access occurs. Use responsibly and ethically.
-            </div>
-            <div class="footer-links">
-                <a href="#" onclick="switchToTab('home')">Home</a>
-                <a href="#" onclick="switchToTab('simulation')">Simulation</a>
-                <a href="#" onclick="switchToTab('defense')">Defense Strategies</a>
-            </div>
-        </footer>
     </div>
 
+
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
+
 </html>
+
