@@ -10,14 +10,58 @@ API endpoints for the attack simulation using SQLite database.
 from flask import Flask, jsonify, render_template
 import sqlite3
 import json
+import os
 
 app = Flask(__name__)
 
+# Configure for Vercel deployment
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 def get_db_connection():
     """Create a database connection and return connection object"""
-    conn = sqlite3.connect('database.db')
+    # Use absolute path for database
+    db_path = os.path.join(os.path.dirname(__file__), 'database.db')
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row  # Enable dictionary-like access
     return conn
+
+def init_attack_data():
+    """Initialize attack data as fallback if database is not available"""
+    return [
+        {
+            'step': 'Fake login page displayed',
+            'mitre': 'T1566',
+            'requires_input': False,
+            'input_type': None,
+            'expected_input': None,
+            'instruction': 'Attacker creates a convincing fake login page'
+        },
+        {
+            'step': 'User enters credentials',
+            'mitre': 'T1003',
+            'requires_input': True,
+            'input_type': 'credentials',
+            'expected_input': 'any',
+            'instruction': 'Please enter your username and password to continue'
+        },
+        {
+            'step': 'Attacker logs in using stolen account',
+            'mitre': 'T1078',
+            'requires_input': False,
+            'input_type': None,
+            'expected_input': None,
+            'instruction': 'Valid account credentials used for unauthorized access'
+        },
+        {
+            'step': 'Account fully compromised',
+            'mitre': 'T1078',
+            'requires_input': False,
+            'input_type': None,
+            'expected_input': None,
+            'instruction': 'Attacker now has full control of the account'
+        }
+    ]
 
 @app.route('/')
 def index():
@@ -29,6 +73,7 @@ def get_attacks():
     """API endpoint to fetch all attack simulation data"""
     
     try:
+        # Try to use database first
         conn = get_db_connection()
         cursor = conn.cursor()
         
@@ -49,17 +94,24 @@ def get_attacks():
             })
         
         conn.close()
-        
         return jsonify(attack_list)
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        # Fallback to static data if database is not available
+        print(f"Database error: {e}")
+        print("Using fallback data")
+        return jsonify(init_attack_data())
 
 @app.route('/health')
 def health_check():
     """Health check endpoint"""
     return jsonify({'status': 'healthy', 'message': 'MITRE ATT&CK Simulation API'})
 
+# Vercel serverless entry point
+def handler(request):
+    return app(request.environ, lambda status, headers: None)
+
+# Local development
 if __name__ == '__main__':
     print("Starting MITRE ATT&CK Compromise Accounts Simulation...")
     print("Access the application at: http://localhost:5000")
